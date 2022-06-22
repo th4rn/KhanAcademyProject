@@ -118,7 +118,8 @@ select sum(quantity) from
 	(select * from shop 
 	where price > 50 
 	or  colour = "green" 
-	order by quantity desc) as subtable;
+	order by quantity desc) 
+as subtable;
 
 
 
