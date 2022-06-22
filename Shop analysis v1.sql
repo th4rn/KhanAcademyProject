@@ -77,7 +77,7 @@ as "Average price of Uniqlo items"
 from shop 
 where brand = "Uniqlo";
 
--- Select ehe average price of items from each brand and number of items from brand within the shop 
+-- Select the average price of items from each brand and number of items from brand within the shop 
 
 select brand, avg(price), count(item) 
 from shop
@@ -111,6 +111,14 @@ select * from shop
 where price > 50 
 or  colour = "green" 
 order by quantity desc;
+
+-- Select total quantity of items from shop which are priced at above £50 or are of colour green
+
+select sum(quantity) from
+	(select * from shop 
+	where price > 50 
+	or  colour = "green" 
+	order by quantity desc) as subtable;
 
 
 
