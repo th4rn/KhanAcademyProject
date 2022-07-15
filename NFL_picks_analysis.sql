@@ -223,14 +223,14 @@ from khanacademy.picks;
 
 -- Find out the number of players signed by each team, ordered by teams who signed the most players
 
-select picked_by, count(player_name) as "Number of players submitted"
+select picked_by, count(player_name) as "Number of players signed"
 from khanacademy.picks
 group by picked_by
 order by count(player_name) desc;
 
 -- Find out the number of players put into draft by each college, ordered by colleges who fed in most players
 
-select college, count(player_name) as "Number of players signed"
+select college, count(player_name) as "Number of players submitted"
 from khanacademy.picks
 group by college
 order by count(player_name) desc;
@@ -266,17 +266,57 @@ where picked_by = "New Orleans";
 select position, picked_by
 from khanacademy.picks
 where position = "WR";
-
+ 
 -- Find out how many individual teams signed a "WR"
 
-select count(distinct picked_by) as teams_picked_WR from
+select count(distinct picked_by) as teams_picked_WR 
+	from
 	(select position, picked_by from khanacademy.picks 
 	where position = "WR"
-    order by position)
-    as teams_picked_WR;
+    	order by position)
+as teams_picked_WR;
     
+-- Find the names, pick number and colleges of the players who were signed by the team who had the most amount of picks
+
+select player_name, pick_number, college, picked_by
+from khanacademy.picks
+where picked_by = "New Orleans"
+order by pick_number;
+
+-- Find average pick number from the above subset
+
+select avg(pick_number) as average_pick_number
+	from
+   	(select player_name, pick_number, college, picked_by
+    	from khanacademy.picks
+    	where picked_by = "New Orleans")
+as average_pick_number;
+
+-- Find details of the first ten picks from the draft
+
+select * from khanacademy.picks
+order by pick_number asc
+limit 10;
+
+-- Find number of distinct positions from the top 10
+
+select count(distinct position) as count_position
+	from
+	(select * from khanacademy.picks
+	limit 10)
+as subtable;
+
+-- Find the teams and the number of players they have selected, for those teams who picked 4 or more players
+
+select picked_by as "NFL Teams", count(player_name) as "players picked"
+from khanacademy.picks
+group by picked_by
+having count(player_name) >= 4
+order by count(player_name) desc;
 
 
+
+    
 
 
 
