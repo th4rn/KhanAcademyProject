@@ -1,4 +1,3 @@
-SELECT * FROM khanacademy.picks;
 
 INSERT INTO khanacademy.picks (pick_number, player_name, college, picked_by, position)
 	VALUES(1,"Jameis Winston","Florida State","Tampa Bay","QB");
@@ -217,7 +216,7 @@ from khanacademy.picks;
 
 -- Find the number of colleges who fed in players to the draft
 
-select count(distinct college)
+select count (distinct college)
 as teams
 from khanacademy.picks;
 
@@ -271,7 +270,8 @@ where position = "WR";
 
 select count(distinct picked_by) as teams_picked_WR 
 	from
-	(select position, picked_by from khanacademy.picks 
+	(select position, picked_by 
+	from khanacademy.picks 
 	where position = "WR"
     	order by position)
 as teams_picked_WR;
