@@ -121,6 +121,17 @@ select sum(quantity) from
 	order by quantity desc) 
 as subtable;
 
+-- Select the item price and brand of stock in the shop and compare price of each item relative to the average price of the shop
+
+select item, price, brand,
+case
+	when (price < (select avg(price) from shop)) then "1_below_average"
+    	when (price = (select avg(price) from shop)) then "2_average"
+    	else "3_above_average"
+    	end as "relative_price"
+from shop
+order by price;
+
 
 
 
